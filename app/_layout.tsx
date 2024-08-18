@@ -1,19 +1,17 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
-import 'react-native-reanimated';
-
-import { useColorScheme } from '@/hooks/useColorScheme';
+import { Fonts } from '@/enums/fonts.enum';
+import { useFonts } from "expo-font";
+import { SplashScreen, Stack } from "expo-router";
+import { useEffect } from "react";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
   const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+    [Fonts.Inter]: require('../assets/fonts/Inter-Regular.ttf'),
+    [Fonts.InterMedium]: require('../assets/fonts/Inter-Medium.ttf'),
+    [Fonts.InterSemiBold]: require('../assets/fonts/Inter-SemiBold.ttf'),
+    [Fonts.InterBold]: require('../assets/fonts/Inter-Bold.ttf'),
   });
 
   useEffect(() => {
@@ -27,11 +25,8 @@ export default function RootLayout() {
   }
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-    </ThemeProvider>
+    <Stack screenOptions={{ headerTitleStyle: { fontFamily: Fonts.InterBold } }}>
+      <Stack.Screen name="index" options={{ headerShown: false }} />
+    </Stack>
   );
 }
